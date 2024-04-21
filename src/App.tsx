@@ -6,8 +6,25 @@ import { Layout } from './layouts/Layout';
 
 const queryClient = new QueryClient();
 
+import { extendTheme } from "@chakra-ui/react"
+
+// 2. Call `extendTheme` and pass your custom values
+const theme = extendTheme({
+  colors: {
+    brand: {
+      100: "#f7fafc",
+      // ...
+      900: "#1a202c",
+    },
+  },
+  fonts: {
+    heading: `'Open Sans', sans-serif`,
+    body: `'Raleway', sans-serif`,
+  },
+})
+
 export const App: React.FC = () => (
-  <ChakraProvider>
+  <ChakraProvider theme={theme}>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Layout>

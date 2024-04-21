@@ -26,15 +26,15 @@ export const Sidebar: React.FC<SideBarProps> = ({
       <Show below="md">
         <Drawer placement="left" onClose={onClose} isOpen={isOpen} {...rest}>
           <DrawerOverlay />
-          <DrawerContent bgColor="#CBD5E0">
+          <DrawerContent bgColor="#7A00E6">
             <DrawerCloseButton />
 
-            <DrawerBody>{children}</DrawerBody>
+            <DrawerBody mt="8">{children}</DrawerBody>
           </DrawerContent>
         </Drawer>
       </Show>
       <Hide below="md">
-        <Box as="aside" position="fixed" left={0} p={5} w="300px" bg="#CBD5E0" top={50} h="100%">
+        <Box as="aside" position="fixed" left={0} top="100px" p={5} w="300px" bg="#7A00E6" h="100%">
           {children}
         </Box>
       </Hide>

@@ -7,37 +7,42 @@ import {
   Show,
   FlexProps,
 } from "@chakra-ui/react";
+import { Search } from "../search";
 
 interface HeaderProps extends FlexProps {
-  toggleSideDrawer: () => void;
+  openDrawer: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
-  toggleSideDrawer,
+  openDrawer,
   ...rest
 }) => {
   return (
     <Flex
       w="100%"
       flexDir={{ base: "column", md: "row" }}
-      bg="#CBD5E0"
+      height={{ base: "150px", md: "100px" }}
+      p={4}
+      bg="#7A00E6"
       {...rest}
     >
-      <HStack pt="4" px="2">
+      <HStack gap="0">
         <Show below="md">
           <IconButton
             icon={<ChevronRightIcon w={8} h={8} />}
             colorScheme="blackAlpha"
             variant="outline"
-            onClick={toggleSideDrawer}
+            onClick={openDrawer}
             aria-label={"Toggle Side Drawer Navigation"}
           />
         </Show>
 
-        <Heading flexGrow="2" textAlign="center">
+        <Heading flexGrow="2" color="whiteAlpha.800" textAlign="center">
           Search UK Crimes
         </Heading>
+        
       </HStack>
+      <Search />
     </Flex>
   );
 };
