@@ -5,7 +5,7 @@ import { stringSearchParamsToArray } from "../../utils";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { LatLngExpression } from "leaflet";
-import { Loading } from "../../components";
+import { Loading, Error } from "../../components";
 
 export const CrimesMap: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -16,7 +16,11 @@ export const CrimesMap: React.FC = () => {
     useGetCrimes(postcodesWithLatLong);
 
   if (!crimes || waitingForCrimes || waitingForLatLongs) {
-    return <Loading />
+    return <Loading />;
+  }
+
+  if (postcodesWithLatLong.length === 0) {
+    return <Error>No crimes found! Try another postcode</Error>;
   }
 
   const mapCenter: LatLngExpression = [
@@ -24,7 +28,12 @@ export const CrimesMap: React.FC = () => {
     Number(postcodesWithLatLong[0].longitude),
   ];
 
-  const latLongsOfCrimes = crimes.slice(0, 10).flatMap(({ location: { latitude, longitude }} ) => ({ latitude, longitude }));
+  const latLongsOfCrimes = crimes
+    .slice(0, 10)
+    .flatMap(({ location: { latitude, longitude } }) => ({
+      latitude,
+      longitude,
+    }));
 
   return (
     <MapContainer
@@ -40,7 +49,12 @@ export const CrimesMap: React.FC = () => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-        {latLongsOfCrimes.map((latLng => <Marker position={[latLng.latitude, latLng.longitude]} />))}
+      {latLongsOfCrimes.map((latLng, index) => (
+        <Marker
+          key={latLng.latitude.toString() + index}
+          position={[latLng.latitude, latLng.longitude]}
+        />
+      ))}
     </MapContainer>
   );
 };

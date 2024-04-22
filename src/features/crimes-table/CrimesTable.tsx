@@ -34,13 +34,13 @@ export const CrimesTable = () => {
   const { data: crimes, isLoading: waitingForCrimes } =
     useGetCrimes(postcodesWithLatLong);
 
-  if (!crimes || waitingForCrimes || waitingForLatLongs) {
+  if (!postcodesWithLatLong || !crimes || waitingForCrimes || waitingForLatLongs) {
     return <Loading />
   }
 
   const crimesGroupedByCategory = groupByCrimeType(crimes);
 
-  if (crimes.length === 0) {
+  if (postcodesWithLatLong?.length === 0 || crimes?.length === 0) {
     return <Error>No crimes found! Try another postcode</Error>
   }
 

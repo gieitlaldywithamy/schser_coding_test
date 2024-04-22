@@ -65,6 +65,7 @@ export const SearchHistory: React.FC<StackProps> = (props) => {
             >
               {postcode.replace("+", " ")}
             </ChakraLink>
+            <Button as={ReactRouterLink} to={`/map?postcodes=${postcode}`} size="sm" colorScheme="blue">Where?</Button>
             <Button
               colorScheme="red"
               size="sm"

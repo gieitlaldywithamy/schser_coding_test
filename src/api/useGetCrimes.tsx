@@ -1,5 +1,6 @@
 import { useQueries } from "@tanstack/react-query";
 import { LatLongPostcode } from "./useGetLatLong";
+import { useToast } from "@chakra-ui/react";
 
 export interface Crime {
   category: string;
@@ -41,11 +42,22 @@ const fetchCrimeData = async ({
 export const useGetCrimes = (
   postcodes: LatLongPostcode[]
 ): CrimeDataResponse => {
+  const toast = useToast();
+
   return useQueries({
     queries: postcodes.map((postcode) => ({
       queryKey: ["crime", postcode.postcode],
       queryFn: () => fetchCrimeData(postcode),
       enabled: !!postcode.postcode,
+      onError: () => {
+        toast({
+          title: "Something went wrong!",
+          description: "Please try searching postcodes again. We're sorry!",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      },
     })),
     combine: (results) => {
       if (results.some((result) => result.isPending)) {
