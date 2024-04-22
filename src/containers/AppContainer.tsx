@@ -2,7 +2,7 @@ import { useDisclosure, Box } from "@chakra-ui/react";
 import { Header, Sidebar } from "../features/navbar";
 import { SearchHistory } from "../features/search-history";
 
-export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
+export const AppContainer: React.FC<React.PropsWithChildren> = ({ children }) => {
   const {
     isOpen: isDrawerOpen,
     onOpen: openDrawer,
@@ -14,7 +14,7 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
       <Sidebar isOpen={isDrawerOpen} onClose={closeDrawer}>
         <SearchHistory />
       </Sidebar>
-      <Box ml={[0, 2]}>
+      <Box>
         <Header openDrawer={openDrawer} />
       </Box>
       <Box

@@ -9,6 +9,8 @@ import React, { useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
 
+const replacePlusWithSpace = (input: string) => input.replace(/+/g,"_");
+
 export const SearchHistory: React.FC<StackProps> = (props) => {
   const [searchHistory, setSearchHistory] = useLocalStorage(
     "postcodes",
@@ -22,13 +24,13 @@ export const SearchHistory: React.FC<StackProps> = (props) => {
       ?.split(",")
       .filter(
         (postcodeQueryParam) =>
-          postcode.replace("+", " ") !== postcodeQueryParam
+          replacePlusWithSpace(postcode) !== postcodeQueryParam
       );
-    if (!newSearchParams) {
+    if (!newSearchParams || newSearchParams.length < 1 ) {
       searchParams.delete("postcodes");
       setSearchParams({});
     }
-    searchParams.set("postcodes", newSearchParams?.join(",") || "");
+    searchParams.set("postcodes", newSearchParams?.join(",") || '');
     setSearchParams(searchParams);
   }, [searchParams, setSearchParams]);
 

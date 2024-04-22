@@ -2,13 +2,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Box, ChakraProvider, Text } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Layout } from './layouts/Layout';
+import { extendTheme } from "@chakra-ui/react"
+import { AppContainer } from './containers';
+import { Crimes } from './features/crimes';
 
 const queryClient = new QueryClient();
 
-import { extendTheme } from "@chakra-ui/react"
-
-// 2. Call `extendTheme` and pass your custom values
 const theme = extendTheme({
   colors: {
     brand: {
@@ -27,12 +26,12 @@ export const App: React.FC = () => (
   <ChakraProvider theme={theme}>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <Layout>
+        <AppContainer>
           <Routes>
             <Route path="/" element={<Box><Text>Please enter some postcodes!</Text></Box>} />
-            <Route path="crimes" element={<div>To Do</div>} />
+            <Route path="crimes" element={<Crimes />} />
           </Routes>
-        </Layout>
+        </AppContainer>
       </BrowserRouter>
 
     </QueryClientProvider>

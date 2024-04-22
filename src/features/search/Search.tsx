@@ -4,14 +4,10 @@ import { useToast } from '@chakra-ui/react'
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
+import { removeDuplicates, replaceSpaceWithPlus } from "../../utils";
 
 const isValidPostcodeSeparatedList = (postcodes: string) => /^(?:[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2},)*[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2}$/.test(postcodes);
 
-const removeDuplicates = (input: string[]) => input.filter((element, index) => {
-    return input.indexOf(element) === index;
-});
-
-const replaceSpaceWithPlus = (input: string) => input.replace(/ /g, '+');
 
 export const Search: React.FC = () => {
     const searchInput = useRef<HTMLInputElement>(null);
@@ -31,7 +27,7 @@ export const Search: React.FC = () => {
         if (!isValidPostcodeSeparatedList(postcodesInput )) {
             toast({
                 title: 'Postcode search failed.',
-                description: "Please enter in format KA9 2DF,PA1 1TF",
+                description: "Please enter in format KA9 2DF,PA1 1TF (note no space between postcodes!)",
                 status: 'error',
                 duration: 9000,
                 isClosable: true,
