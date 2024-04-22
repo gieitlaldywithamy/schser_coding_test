@@ -43,11 +43,11 @@ export const Search: React.FC = () => {
     return (
         <Box p="4" flexGrow="2">
             <form onSubmit={handleSubmit}>
-                <InputGroup bg="#6012a6" color="whiteAlpha.800" borderColor="#A0AEC0">
+                <InputGroup color='blackAlpha.800'>
                     <InputLeftElement pointerEvents='none'>
-                        <SearchIcon color='whiteAlpha.800' />
+                        <SearchIcon  />
                     </InputLeftElement>
-                    <Input colorScheme="blackAlpha" ref={searchInput} isInvalid={searchInvalid} required placeholder="Enter postcode or postcodes in comma separated list" />
+                    <Input bgColor="#f0eddd" ref={searchInput} isInvalid={searchInvalid} required placeholder="Enter postcode or postcodes in comma separated list" />
                 </InputGroup>
             </form>
         </Box>

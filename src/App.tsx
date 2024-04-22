@@ -4,18 +4,13 @@ import { Box, ChakraProvider, Text } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { extendTheme } from "@chakra-ui/react"
 import { AppContainer } from './containers';
-import { Crimes } from './features/crimes';
+import { CrimesTable } from './features/crimes-table';
+import { CrimesMap } from './features/crimes-map';
+import { NotFound } from './features/not-found';
 
 const queryClient = new QueryClient();
 
 const theme = extendTheme({
-  colors: {
-    brand: {
-      100: "#f7fafc",
-      // ...
-      900: "#1a202c",
-    },
-  },
   fonts: {
     heading: `'Open Sans', sans-serif`,
     body: `'Raleway', sans-serif`,
@@ -28,8 +23,10 @@ export const App: React.FC = () => (
       <BrowserRouter>
         <AppContainer>
           <Routes>
-            <Route path="/" element={<Box><Text>Please enter some postcodes!</Text></Box>} />
-            <Route path="crimes" element={<Crimes />} />
+            <Route path="crimes" element={<CrimesTable />} />
+            <Route path="map" element={<CrimesMap />} />
+            <Route path="*" element={<NotFound />}>
+          </Route>
           </Routes>
         </AppContainer>
       </BrowserRouter>

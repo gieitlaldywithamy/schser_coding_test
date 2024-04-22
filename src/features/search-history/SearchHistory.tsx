@@ -9,7 +9,7 @@ import React, { useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
 
-const replacePlusWithSpace = (input: string) => input.replace(/+/g,"_");
+const replacePlusWithSpace = (input: string) => input?.replace('+',"_") || '';
 
 export const SearchHistory: React.FC<StackProps> = (props) => {
   const [searchHistory, setSearchHistory] = useLocalStorage(
@@ -42,7 +42,7 @@ export const SearchHistory: React.FC<StackProps> = (props) => {
       {...props}>
         {searchHistory.map((postcode) => {
           return (
-            <Flex key={postcode}  bgColor="#503189" justifyContent="space-between" alignItems="center" borderRadius="md" p="4">
+            <Flex key={postcode} bgColor="#f0eddd" justifyContent="space-between" alignItems="center" borderRadius="md" p="4">
               <ChakraLink
                 as={ReactRouterLink}
                 to={`/crimes?postcodes=${postcode}`}

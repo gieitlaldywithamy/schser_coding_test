@@ -16,11 +16,17 @@ import {
   Tabs,
   Container,
 } from "@chakra-ui/react";
-import { useGetLatLong } from "../../api/useGetLatLong";
+import { useGetLatLong, useGetCrimes, Crime, CrimeList } from "../../api";
 import { stringSearchParamsToArray } from "../../utils";
-import { useGetCrimes } from "../../api/useGetCrimes";
 
-export const Crimes = () => {
+const groupByCrimeType = (crimeList: Crime[]): { [key: string]: Crime[] } =>
+  crimeList.reduce((groupedByCrimeType: CrimeList, currentCrime: Crime) => {
+    (groupedByCrimeType[currentCrime.category] =
+      groupedByCrimeType[currentCrime.category] || []).push(currentCrime);
+    return groupedByCrimeType;
+  }, {});
+
+export const CrimesTable = () => {
   const [searchParams] = useSearchParams();
   const postcodes = searchParams.get("postcodes");
   const { data: postcodesWithLatLong, isLoading: waitingForLatLongs } =
@@ -31,6 +37,8 @@ export const Crimes = () => {
   if (!crimes || waitingForCrimes || waitingForLatLongs) {
     return <Text>Loading</Text>;
   }
+
+  const crimesGroupedByCategory = groupByCrimeType(crimes);
 
   return (
     <Container m="0" maxW="100%">
@@ -44,7 +52,7 @@ export const Crimes = () => {
             },
           }}
         >
-          {Object.keys(crimes).map((crimeType) => (
+          {Object.keys(crimesGroupedByCategory).map((crimeType) => (
             <Tab css={{ "text-transform": "capitalize" }} minW="max-content">
               {crimeType.replace(/-/g, " ")}
             </Tab>
@@ -52,7 +60,7 @@ export const Crimes = () => {
         </TabList>
 
         <TabPanels>
-          {Object.values(crimes).map((crimes) => {
+          {Object.values(crimesGroupedByCategory).map((crimes: Crime[]) => {
             // TODO needs pagination hence slice
             return (
               <TabPanel>

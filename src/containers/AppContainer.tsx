@@ -22,6 +22,7 @@ export const AppContainer: React.FC<React.PropsWithChildren> = ({ children }) =>
         left={{ base: "0px", md: "300px" }}
         top="100px"
         width={{ base: "auto", md: "calc(100% - 300px)" }}
+        height={{ base: "auto", md: "100%" }}
       >
         {children}
       </Box>

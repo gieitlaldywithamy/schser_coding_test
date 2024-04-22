@@ -23,7 +23,7 @@ export const Header: React.FC<HeaderProps> = ({
       flexDir={{ base: "column", md: "row" }}
       height={{ base: "150px", md: "100px" }}
       p={4}
-      bg="#7A00E6"
+      bgColor="#FDB018"
       {...rest}
     >
       <HStack gap="0">
@@ -37,7 +37,7 @@ export const Header: React.FC<HeaderProps> = ({
           />
         </Show>
 
-        <Heading flexGrow="2" color="whiteAlpha.800" textAlign="center">
+        <Heading flexGrow="2" textAlign="center">
           Search UK Crimes
         </Heading>
         

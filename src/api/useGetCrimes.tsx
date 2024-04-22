@@ -10,6 +10,8 @@ export interface Crime {
       id: number;
       name: string;
     };
+    latitude: number;
+    longitude: number;
   };
   outcome_status: {
     category: string;
@@ -20,11 +22,11 @@ export interface Crime {
 }
 
 interface CrimeDataResponse {
-  data?: CrimeList;
+  data?: Crime[];
   isLoading: boolean;
 }
 
-type CrimeList = { [key: string]: Crime[] };
+export type CrimeList = { [key: string]: Crime[] };
 
 const groupByCrimeType = (crimeList: Crime[]): { [key: string]: Crime[] } =>
   crimeList.reduce((groupedByCrimeType: CrimeList, currentCrime: Crime) => {
@@ -83,7 +85,7 @@ export const useGetCrimes = (
       });
 
       return {
-        data: groupByCrimeType(flatCrimeList),
+        data: flatCrimeList,
         isLoading: false,
       };
     },
