@@ -20,9 +20,11 @@ export const AppContainer: React.FC<React.PropsWithChildren> = ({ children }) =>
       <Box
         position={{ base: "relative", md: "fixed" }}
         left={{ base: "0px", md: "300px" }}
-        top="100px"
+        top="auto"
+        p="2"
+        bg="#f0eddd"
         width={{ base: "auto", md: "calc(100% - 300px)" }}
-        height={{ base: "auto", md: "100%" }}
+        height={{ base: "calc(100vh - 100px)", md: "100%" }}
       >
         {children}
       </Box>

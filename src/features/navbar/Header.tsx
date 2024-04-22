@@ -21,7 +21,6 @@ export const Header: React.FC<HeaderProps> = ({
     <Flex
       w="100%"
       flexDir={{ base: "column", md: "row" }}
-      height={{ base: "150px", md: "100px" }}
       p={4}
       bgColor="#FDB018"
       {...rest}
@@ -42,7 +41,7 @@ export const Header: React.FC<HeaderProps> = ({
         </Heading>
         
       </HStack>
-      <Search />
+      <Search ml={[0, 4]} />
     </Flex>
   );
 };

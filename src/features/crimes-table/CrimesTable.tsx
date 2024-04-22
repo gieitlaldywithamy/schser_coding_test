@@ -4,7 +4,6 @@ import {
   Table,
   Thead,
   Tbody,
-  Text,
   Tr,
   Th,
   Td,
@@ -18,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { useGetLatLong, useGetCrimes, Crime, CrimeList } from "../../api";
 import { stringSearchParamsToArray } from "../../utils";
+import { Loading, Error } from "../../components";
 
 const groupByCrimeType = (crimeList: Crime[]): { [key: string]: Crime[] } =>
   crimeList.reduce((groupedByCrimeType: CrimeList, currentCrime: Crime) => {
@@ -35,16 +35,21 @@ export const CrimesTable = () => {
     useGetCrimes(postcodesWithLatLong);
 
   if (!crimes || waitingForCrimes || waitingForLatLongs) {
-    return <Text>Loading</Text>;
+    return <Loading />
   }
 
   const crimesGroupedByCategory = groupByCrimeType(crimes);
 
+  if (crimes.length === 0) {
+    return <Error>No crimes found! Try another postcode</Error>
+  }
+
   return (
     <Container m="0" maxW="100%">
-      <Tabs>
+      <Tabs variant='soft-rounded' colorScheme='green' p="2">
         <TabList
           overflowX="scroll"
+          p="2"
           sx={{
             scrollbarWidth: "none",
             "::-webkit-scrollbar": {
@@ -53,7 +58,7 @@ export const CrimesTable = () => {
           }}
         >
           {Object.keys(crimesGroupedByCategory).map((crimeType) => (
-            <Tab css={{ "text-transform": "capitalize" }} minW="max-content">
+            <Tab css={{ "text-transform": "capitalize" }} minW="max-content" key={crimeType}>
               {crimeType.replace(/-/g, " ")}
             </Tab>
           ))}
@@ -63,7 +68,7 @@ export const CrimesTable = () => {
           {Object.values(crimesGroupedByCategory).map((crimes: Crime[]) => {
             // TODO needs pagination hence slice
             return (
-              <TabPanel>
+              <TabPanel >
                 <TableContainer>
                   <Table variant="fixed">
                     <Thead>

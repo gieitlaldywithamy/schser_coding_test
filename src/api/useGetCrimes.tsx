@@ -1,8 +1,6 @@
 import { useQueries } from "@tanstack/react-query";
 import { LatLongPostcode } from "./useGetLatLong";
 
-//TODO note this file is horrendous (i wouldnt normally mutate the response so much) but i've timeboxed due to frustration, would have asked for a sanity check
-
 export interface Crime {
   category: string;
   location: {
@@ -27,13 +25,6 @@ interface CrimeDataResponse {
 }
 
 export type CrimeList = { [key: string]: Crime[] };
-
-const groupByCrimeType = (crimeList: Crime[]): { [key: string]: Crime[] } =>
-  crimeList.reduce((groupedByCrimeType: CrimeList, currentCrime: Crime) => {
-    (groupedByCrimeType[currentCrime.category] =
-      groupedByCrimeType[currentCrime.category] || []).push(currentCrime);
-    return groupedByCrimeType;
-  }, {});
 
 const fetchCrimeData = async ({
   latitude,
@@ -65,7 +56,7 @@ export const useGetCrimes = (
       }
       const flatCrimeList: Crime[] = results.flatMap((result) => {
         const { data } = result;
-        // TOxDO refactor
+
         const flattenPostcodeObject = (postcodesWithCrimeList: {
           [x: string]: Crime[];
         }) => {

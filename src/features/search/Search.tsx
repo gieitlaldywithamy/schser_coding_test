@@ -1,5 +1,5 @@
 import { SearchIcon } from "@chakra-ui/icons";
-import { Box, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import { Box, BoxProps, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { useToast } from '@chakra-ui/react'
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -9,13 +9,13 @@ import { removeDuplicates, replaceSpaceWithPlus } from "../../utils";
 const isValidPostcodeSeparatedList = (postcodes: string) => /^(?:[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2},)*[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2}$/.test(postcodes);
 
 
-export const Search: React.FC = () => {
+export const Search: React.FC<BoxProps> = (props) => {
     const searchInput = useRef<HTMLInputElement>(null);
 
     const toast = useToast();
     const navigate = useNavigate();
 
-    const [searchHistory, setSearchHistory] = useLocalStorage('postcodes', [] as string[] )
+    const [searchHistory, setSearchHistory] = useLocalStorage('postcodes', [] as string[] );
     const [searchInvalid, setSearchInvalid] = useState(false);
 
     const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
@@ -41,7 +41,7 @@ export const Search: React.FC = () => {
     }
 
     return (
-        <Box p="4" flexGrow="2">
+        <Box p={4} flexGrow="2" {...props}>
             <form onSubmit={handleSubmit}>
                 <InputGroup color='blackAlpha.800'>
                     <InputLeftElement pointerEvents='none'>

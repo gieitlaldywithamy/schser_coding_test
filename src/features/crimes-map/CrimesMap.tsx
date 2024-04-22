@@ -1,14 +1,11 @@
 import { useSearchParams } from "react-router-dom";
 
-import {
-  Tooltip,
-  Text,
-} from "@chakra-ui/react";
 import { useGetLatLong, useGetCrimes } from "../../api";
 import { stringSearchParamsToArray } from "../../utils";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { LatLngExpression } from "leaflet";
+import { Loading } from "../../components";
 
 export const CrimesMap: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -19,7 +16,7 @@ export const CrimesMap: React.FC = () => {
     useGetCrimes(postcodesWithLatLong);
 
   if (!crimes || waitingForCrimes || waitingForLatLongs) {
-    return <Text>Loading</Text>;
+    return <Loading />
   }
 
   const mapCenter: LatLngExpression = [
